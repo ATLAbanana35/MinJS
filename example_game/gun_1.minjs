@@ -1,0 +1,70 @@
+#!#imp;
+   @import Loop;
+   @import FLoop;
+   @import Return;
+   @import At;
+   @import FRun;
+   @Fimport Minecraft::If;
+   @Fimport Minecraft::Command;
+   @Fimport Minecraft::Event;
+   @Fimport Minecraft::EventFun;
+   @Fimport Minecraft::Summon;
+   @Fimport Minecraft::Clear;
+   @Fimport PrePossessor::S_PPvar;
+
+#!#fun;
+    fun<Vars>()-:
+      #Vars#fun;
+        NULL;
+      #Vars#text;
+        String PPvar Player = "@a[team=player1,limit=1]";
+    Vars_END
+    fun<ProjLoop1>()-:
+      #ProjLoop1#fun;
+        NULL;
+      #ProjLoop1#text;
+        Execute<"execute at @e[tag=FireBall] run particle flame ~ ~1 ~ 0 0 0 0.01 25">;
+        Execute<"execute at @e[tag=FireBall] run tp @e[tag=FireBall,limit=1,sort=nearest] ^ ^ ^-1">;
+        Execute<"execute as @e[tag=FireBall] at @s if entity @e[distance=..1,tag=!FireBall] run damage @e[distance=..1,tag=!FireBall,limit=1] 15 minecraft:arrow">;
+    ProjLoop1_END
+    fun<NAMEBis>()-:
+      #NAMEBis#fun;
+        NULL;
+      #NAMEBis#text;
+        Clear<"%Player","gold_nugget",1>;
+        At<"%Player">;
+        Summon<"minecraft:fireball","^ ^ ^1","{Tags:['FireBall','Spell'],NoGravity:1b,Marker:1b,Invisible:1b}">;
+        At<"%Player">;
+        Execute<"execute at @e[tag=FireBall,limit=1,sort=nearest] run tp @e[tag=FireBall,limit=1,sort=nearest] ~ ~0.05 ~ facing entity @p">;
+        Execute<"execute if score @p shoot1 >= true bool run scoreboard players set @p shoot1 0">;
+    NAMEBis_END
+    fun<NAME4>()-:
+      #NAME4#fun;
+        NULL;
+      #NAME4#text;
+        FastRun NAMEBis();
+      NAME4_END
+    fun<NAME3>()-:
+      #NAME3#fun;
+       NULL;
+      #NAME3#text;
+        EvFun<%Player,MyEvent>;
+        Minecraft If<entity>(@a[nbt={Inventory:[{id:"minecraft:gold_nugget"}]}]): NAME4;
+    NAME3_END
+    fun<NAME2>()-:
+      #NAME2#fun;
+        NULL;
+      #NAME2#text;
+        EvFun<%Player,MyEvent2>;
+        When<minecraft.used:minecraft.spyglass>(%Player&MyEvent): NAME3;
+    NAME2_END
+    fun<NAME>()-:
+       #NAME#fun;
+         NULL;
+       #NAME#text;
+        When<minecraft.custom:minecraft.sneak_time>(%Player&MyEvent2): NAME2;
+    NAME_END
+#!#text;
+   Loop NAME();
+   FastLoop ProjLoop1();
+   Return;

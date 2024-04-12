@@ -1,0 +1,197 @@
+#!#imp;
+   @import Loop;
+   @import FLoop;
+   @import Return;
+   @import At;
+   @import As;
+   @import FRun;
+   @import Run;
+   @import Sadd;
+   @import Svar;
+   @import SIf;
+   @import Wait;
+   @Fimport Minecraft::Print;
+   @Fimport PrePossessor::PPfun;
+   @Fimport Minecraft::Tp;
+   @Fimport Minecraft::If;
+   @Fimport Minecraft::Command;
+   @Fimport Minecraft::Event;
+   @Fimport Minecraft::EventFun;
+   @Fimport Minecraft::Summon;
+   @Fimport Minecraft::Clear;
+   @Fimport PrePossessor::S_PPvar;
+   @Fimport Minecraft::setBlock;
+
+#!#fun;
+    fun<Vars>()-:
+      #Vars#fun;
+        NULL;
+      #Vars#text;
+        String PPvar Player = "@a[team=player2,limit=1]";
+    Vars_END
+    fun<ProjLoop1>()-:
+      #ProjLoop1#fun;
+        NULL;
+      #ProjLoop1#text;
+        Execute<"execute at @e[tag=FireBall1] run particle flame ~ ~1 ~ 0 0 0 0.01 25">;
+        Execute<"execute at @e[tag=FireBall1] run tp @e[tag=FireBall1,limit=1,sort=nearest] ^ ^ ^-1">;
+        Execute<"execute as @e[tag=FireBall1] at @s if entity @e[distance=..1,tag=!FireBall1] run damage @e[distance=..1,tag=!FireBall1,limit=1] 30 minecraft:arrow">;
+    ProjLoop1_END
+    fun<NAMEBis1>()-:
+      #NAMEBis1#fun;
+        NULL;
+      #NAMEBis1#text;
+        Clear<"%Player","gold_nugget",1>;
+        At<"%Player">;
+        Summon<"minecraft:fireball","^ ^ ^1","{Tags:['FireBall1','Spell'],NoGravity:1b,Marker:1b,Invisible:1b}">;
+        At<"%Player">;
+        Execute<"execute at @e[tag=FireBall1,limit=1,sort=nearest] run tp @e[tag=FireBall1,limit=1,sort=nearest] ~ ~0.05 ~ facing entity @p">;
+        Execute<"execute if score @p shoot1 >= true bool run scoreboard players set @p shoot1 0">;
+    NAMEBis1_END
+    fun<NAME41>()-:
+      #NAME41#fun;
+        NULL;
+      #NAME41#text;
+        FastRun NAMEBis1();
+      NAME41_END
+    fun<NAME31>()-:
+      #NAME31#fun;
+       NULL;
+      #NAME31#text;
+        EvFun<%Player,MyEvent>;
+        As<"%Player">;
+        Minecraft If<entity>(@s[nbt={Inventory:[{id:"minecraft:gold_nugget"}]}]): NAME41;
+    NAME31_END
+    fun<NAME21>()-:
+      #NAME21#fun;
+        NULL;
+      #NAME21#text;
+        EvFun<%Player,MyEvent2>;
+        When<minecraft.used:minecraft.spyglass>(%Player&MyEvent): NAME31;
+    NAME21_END
+    fun<NAME1>()-:
+       #NAME1#fun;
+         NULL;
+       #NAME1#text;
+        When<minecraft.custom:minecraft.sneak_time>(%Player&MyEvent2): NAME21;
+    NAME1_END
+    fun<NAMEBis2>()-:
+      #NAMEBis2#fun;
+        NULL;
+      #NAMEBis2#text;
+        Clear<"%Player","iron_nugget",1>;
+        At<"%Player">;
+        Summon<"minecraft:armor_stand","^ ^ ^1","{Tags:['FireBall2','Spell'],NoGravity:1b,Marker:1b,Invisible:1b}">;
+        At<"%Player">;
+        Execute<"execute at @e[tag=FireBall2,limit=1,sort=nearest] run tp @e[tag=FireBall2,limit=1,sort=nearest] ~ ~0.05 ~ facing entity @p">;
+        Execute<"execute if score @p shoot1 >= true bool run scoreboard players set @p shoot1 0">;
+    NAMEBis2_END
+    fun<RunOtherFun2>()-:
+    #RunOtherFun2#fun;
+      NULL;
+    #RunOtherFun2#text;
+      FastRun NAMEBis2();
+    RunOtherFun2_END
+    fun<FNAME4>()-:
+      #FNAME4#fun;
+       NULL;
+      #FNAME4#text;
+        EvFun<%Player,Sneak_Event>;
+        As<"%Player">;
+        Minecraft If<entity>(@s[nbt={SelectedItem:{id:"minecraft:bow"}}]): RunOtherFun2;
+    FNAME4_END
+    fun<FNAME3>()-:
+      #FNAME3#fun;
+       NULL;
+      #FNAME3#text;
+        EvFun<%Player,Sneak_Event>;
+        As<"%Player">;
+        Minecraft If<entity>(@s[nbt={Inventory:[{id:"minecraft:iron_nugget"}]}]): FNAME4;
+    FNAME3_END
+    fun<FProjLoop1>()-:
+      #FProjLoop1#fun;
+        NULL;
+      #FProjLoop1#text;
+        Execute<"execute at @e[tag=FireBall2] run particle flame ~ ~1 ~ 0 0 0 0.01 25">;
+        Execute<"execute at @e[tag=FireBall2] run tp @e[tag=FireBall2,limit=1,sort=nearest] ^ ^ ^-1">;
+        Execute<"execute as @e[tag=FireBall2] at @s if entity @e[distance=..1,tag=!FireBall2] run damage @e[distance=..1,tag=!FireBall2,limit=1] 30 minecraft:arrow">;
+        When<minecraft.custom:minecraft.sneak_time>(%Player&Sneak_Event): FNAME3;
+      FProjLoop1_END
+    fun<Vars>()-:
+      #Vars#fun;
+        NULL;
+      #Vars#text;
+        String PPvar Player = "@a[team=player1,limit=1]";
+    Vars_END
+    fun<XProjLoop1>()-:
+      #XProjLoop1#fun;
+        NULL;
+      #XProjLoop1#text;
+        Execute<"execute at @e[tag=FireBallZeus] run particle minecraft:sonic_boom ~ ~1 ~ 0 0 0 0.01 25">;
+        Execute<"execute at @e[tag=FireBallZeus] run tp @e[tag=FireBallZeus,limit=1,sort=nearest] ^ ^ ^-1">;
+        Execute<"execute as @e[tag=FireBallZeus] at @s unless block ~ ~ ~ air run summon tnt ~ ~ ~">;
+        Execute<"execute as @e[tag=FireBallZeus] at @s unless block ~ ~ ~ air run kill @s">;
+    XProjLoop1_END
+    fun<NAMEBis3>()-:
+      #NAMEBis3#fun;
+        NULL;
+      #NAMEBis3#text;
+        At<"%Player">;
+        Summon<"minecraft:fireball","^ ^ ^1","{Tags:['FireBallZeus','Spell'],NoGravity:1b,Marker:1b,Invisible:1b}">;
+        Execute<"execute at @e[tag=FireBallZeus,limit=1,sort=nearest] run tp @e[tag=FireBallZeus,limit=1,sort=nearest] ~ ~0.05 ~ facing entity @p">;
+        Execute<"execute if score @p shoot1 >= true bool run scoreboard players set @p shoot1 0">;
+        Summon<"minecraft:lightning_bolt","~ ~10 ~","{}">;
+        NAMEBis3_END
+    fun<MoveUser3>()-:
+      #MoveUser3#fun;
+        NULL;
+      #MoveUser3#text;
+        At<"%Player">;
+        Tp<"%Player","~ ~1.5 ~">;
+        At<"%Player">;
+        setBlock<~,~-1,~,"barrier">;
+        At<"%Player">;
+        setBlock<~,~-2,~,"air">;
+    MoveUser3_END
+    fun<NAME43>()-:
+      #NAME43#fun;
+        NULL;
+      #NAME43#text;
+        EvFun<%Player,carrotEvent>;
+        Clear<"%Player","carrot_on_a_stick",1>;
+        FastRun MoveUser3();
+        FastRun MoveUser3();
+        FastRun MoveUser3();
+        FastRun MoveUser3();
+        FastRun MoveUser3();
+        FastRun MoveUser3();
+        FastRun MoveUser3();
+        FastRun MoveUser3();
+        FastRun NAMEBis3();
+        Wait 4;
+        Wait 4;
+        Wait 4;
+        Wait 4;
+        FastRun NAMEBis3();
+        Wait 4;
+        Wait 4;
+        Wait 4;
+        Wait 4;
+        FastRun NAMEBis3();
+        At<"%Player">;
+        setBlock<~,~-1,~,"air">;
+        setBlock<~,~-4,~,"air">;
+      NAME43_END
+    fun<NAME33>()-:
+      #NAME33#fun;
+       NULL;
+      #NAME33#text;
+        When<minecraft.used:minecraft.carrot_on_a_stick>(%Player&carrotEvent): NAME43;
+    NAME33_END
+#!#text;
+   Loop NAME1();
+   FastLoop ProjLoop1();
+   FastLoop FProjLoop1();
+   Loop NAME33();
+   FastLoop XProjLoop1();
+   Return;

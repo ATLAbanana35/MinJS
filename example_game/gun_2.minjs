@@ -1,0 +1,69 @@
+#!#imp;
+   @import Loop;
+   @import FLoop;
+   @import Run;
+   @import Return;
+   @import At;
+   @import Sadd;
+   @import FRun;
+   @import Svar;
+   @import SIf;
+   @Fimport Minecraft::If;
+   @Fimport Minecraft::Command;
+   @Fimport Minecraft::Event;
+   @Fimport Minecraft::EventFun;
+   @Fimport Minecraft::Summon;
+   @Fimport Minecraft::Clear;
+   @Fimport Minecraft::Print;
+   @Fimport PrePossessor::PPfun;
+   @Fimport PrePossessor::S_PPvar;
+#!#fun;
+    fun<Vars>()-:
+      #Vars#fun;
+        NULL;
+      #Vars#text;
+        String PPvar Player = "@a[team=player1,limit=1]";
+    Vars_END
+    fun<NAMEBis>()-:
+      #NAMEBis#fun;
+        NULL;
+      #NAMEBis#text;
+        Clear<"%Player","iron_nugget",1>;
+        At<"%Player">;
+        Summon<"minecraft:armor_stand","^ ^ ^1","{Tags:['FireBall','Spell'],NoGravity:1b,Marker:1b,Invisible:1b}">;
+        Execute<"execute at @e[tag=FireBall,limit=1,sort=nearest] run tp @e[tag=FireBall,limit=1,sort=nearest] ~ ~0.05 ~ facing entity @p">;
+        Execute<"execute if score @p shoot1 >= true bool run scoreboard players set @p shoot1 0">;
+    NAMEBis_END
+    fun<RunOtherFun>()-:
+    #RunOtherFun#fun;
+      NULL;
+    #RunOtherFun#text;
+      FastRun NAMEBis();
+    RunOtherFun_END
+    fun<NAME4>()-:
+      #NAME4#fun;
+       NULL;
+      #NAME4#text;
+        EvFun<%Player,Sneak_Event>;
+        Minecraft If<entity>(@a[nbt={SelectedItem:{id:"minecraft:bow"}}]): RunOtherFun;
+    NAME4_END
+    fun<NAME3>()-:
+      #NAME3#fun;
+       NULL;
+      #NAME3#text;
+        EvFun<%Player,Sneak_Event>;
+        Minecraft If<entity>(@a[nbt={Inventory:[{id:"minecraft:iron_nugget"}]}]): NAME4;
+    NAME3_END
+    fun<ProjLoop1>()-:
+      #ProjLoop1#fun;
+        NULL;
+      #ProjLoop1#text;
+        Execute<"execute at @e[tag=FireBall] run particle flame ~ ~1 ~ 0 0 0 0.01 25">;
+        Execute<"execute at @e[tag=FireBall] run tp @e[tag=FireBall,limit=1,sort=nearest] ^ ^ ^-1">;
+        Execute<"execute as @e[tag=FireBall] at @s if entity @e[distance=..1,tag=!FireBall] run damage @e[distance=..1,tag=!FireBall,limit=1] 5 minecraft:arrow">;
+        When<minecraft.custom:minecraft.sneak_time>(%Player&Sneak_Event): NAME3;
+      ProjLoop1_END
+
+#!#text;
+   FastLoop ProjLoop1();
+   Return;

@@ -1,0 +1,88 @@
+#!#imp;
+  @import Wait;
+  @import Svar;
+  @import Sset;
+  @import Srm;
+  @import Sadd;
+  @import Run;
+  @import Loop;
+  @import SIf;
+  @Fimport Minecraft::Command;
+  @Fimport Minecraft::Print;
+  @Fimport PrePossessor::S_PPvar;
+#!#fun;
+  fun<Vars>()-:
+  #Vars#fun;
+    NULL;
+  #Vars#text;
+    String PPvar Player = "@a[team=player1,limit=1]";
+    %Player Svar Counter = 100;
+    %Player Svar ZoneNumber = 1;
+  Vars_END
+  fun<Res1>()-:
+    #Res1#fun;
+      NULL;
+    #Res1#text;
+      Counter.Set(100);
+      Print<"!!!Zone Retrecing">;
+      Wait 4;
+      Print<"Current Zone: 2. Reducing 500 blocks">;
+      ZoneNumber.Add();
+      Execute<"worldborder set 500 33">;
+  Res1_END
+  fun<Res2>()-:
+    #Res2#fun;
+      NULL;
+    #Res2#text;
+      Counter.Set(100);
+      Print<"!!!Zone Pausing">;
+      Wait 4;
+      Print<"Current Zone: 2. Pausing.">;
+      ZoneNumber.Add();
+  Res2_END
+  fun<Res3>()-:
+    #Res3#fun;
+      NULL;
+    #Res3#text;
+      Counter.Set(100);
+      Print<"!!!Zone Retrecing">;
+      Wait 4;
+      Print<"Current Zone: 2. Reducing 450 blocks">;
+      ZoneNumber.Add();
+      Execute<"worldborder set 50 33">;
+  Res3_END
+  fun<ZoneType>()-:
+  #ZoneType#fun;
+    NULL;
+  #ZoneType#text;
+      If<Svar>(Counter < 1): Res1();
+  ZoneType_END
+  fun<ZoneType2>()-:
+  #ZoneType2#fun;
+    NULL;
+  #ZoneType2#text;
+      If<Svar>(Counter < 1): Res2();
+  ZoneType2_END
+  fun<ZoneType3>()-:
+  #ZoneType3#fun;
+    NULL;
+  #ZoneType3#text;
+      If<Svar>(Counter < 1): Res3();
+  ZoneType3_END
+  fun<MainLoop>()-:
+    #MainLoop#fun;
+      NULL;
+    #MainLoop#text;
+      Counter.Remove();
+      Execute<"title @a actionbar [{"text":"Next Zone in: ","color":"gray","hoverEvent":{"action":"show_text","value":"Time until next zone"}},{"score":{"name":"@a[team=player1,limit=1]","objective":"Counter"},"color":"gray"}]">;
+      If<Svar>(ZoneNumber = 1): ZoneType;
+      If<Svar>(ZoneNumber = 2): ZoneType2;
+      If<Svar>(ZoneNumber = 3): ZoneType3;
+    MainLoop_END
+#!#text;
+  Execute<"scoreboard objectives remove ZoneNumber">;
+  Execute<"scoreboard objectives remove Counter">;
+  Execute<"worldborder set 1000 1">;
+  Run Vars();
+  Loop MainLoop();
+  Return;

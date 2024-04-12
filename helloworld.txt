@@ -1,0 +1,14 @@
+#!#imp;
+   @import Run;
+   @import Return;
+   @Fimport Minecraft::Print;
+#!#fun;
+    fun<MyFunction>()-:
+      #MyFunction#fun;
+        NULL;
+      #MyFunction#text;
+        Print<"Hello, World!">;
+    MyFunction_END
+#!#text;
+   Run MyFunction();
+   Return;

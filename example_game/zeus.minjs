@@ -1,0 +1,92 @@
+#!#imp;
+   @import Loop;
+   @import FLoop;
+   @import Return;
+   @import At;
+   @import Wait;
+   @import FRun;
+   @Fimport Minecraft::If;
+   @Fimport Minecraft::Command;
+   @Fimport Minecraft::Event;
+   @Fimport Minecraft::EventFun;
+   @Fimport Minecraft::Tp;
+   @Fimport Minecraft::Summon;
+   @Fimport Minecraft::Clear;
+   @Fimport Minecraft::setBlock;
+   @Fimport PrePossessor::S_PPvar;
+#!#fun;
+    fun<Vars>()-:
+      #Vars#fun;
+        NULL;
+      #Vars#text;
+        String PPvar Player = "@a[team=player1,limit=1]";
+    Vars_END
+    fun<ProjLoop1>()-:
+      #ProjLoop1#fun;
+        NULL;
+      #ProjLoop1#text;
+        Execute<"execute at @e[tag=FireBallZeus] run particle minecraft:sonic_boom ~ ~1 ~ 0 0 0 0.01 25">;
+        Execute<"execute at @e[tag=FireBallZeus] run tp @e[tag=FireBallZeus,limit=1,sort=nearest] ^ ^ ^-1">;
+        Execute<"execute as @e[tag=FireBallZeus] at @s unless block ~ ~ ~ air run summon tnt ~ ~ ~">;
+        Execute<"execute as @e[tag=FireBallZeus] at @s unless block ~ ~ ~ air run kill @s">;
+    ProjLoop1_END
+    fun<NAMEBis>()-:
+      #NAMEBis#fun;
+        NULL;
+      #NAMEBis#text;
+        At<"%Player">;
+        Summon<"minecraft:fireball","^ ^ ^1","{Tags:['FireBallZeus','Spell'],NoGravity:1b,Marker:1b,Invisible:1b}">;
+        Execute<"execute at @e[tag=FireBallZeus,limit=1,sort=nearest] run tp @e[tag=FireBallZeus,limit=1,sort=nearest] ~ ~0.05 ~ facing entity @p">;
+        Execute<"execute if score @p shoot1 >= true bool run scoreboard players set @p shoot1 0">;
+        Summon<"minecraft:lightning_bolt","~ ~10 ~","{}">;
+        NAMEBis_END
+    fun<MoveUser>()-:
+      #MoveUser#fun;
+        NULL;
+      #MoveUser#text;
+        At<"%Player">;
+        Tp<"%Player","~ ~1.5 ~">;
+        At<"%Player">;
+        setBlock<~,~-1,~,"barrier">;
+        At<"%Player">;
+        setBlock<~,~-2,~,"air">;
+    MoveUser_END
+    fun<NAME4>()-:
+      #NAME4#fun;
+        NULL;
+      #NAME4#text;
+        EvFun<%Player,MyEvent>;
+        Clear<"%Player","carrot_on_a_stick",1>;
+        FastRun MoveUser();
+        FastRun MoveUser();
+        FastRun MoveUser();
+        FastRun MoveUser();
+        FastRun MoveUser();
+        FastRun MoveUser();
+        FastRun MoveUser();
+        FastRun MoveUser();
+        FastRun NAMEBis();
+        Wait 4;
+        Wait 4;
+        Wait 4;
+        Wait 4;
+        FastRun NAMEBis();
+        Wait 4;
+        Wait 4;
+        Wait 4;
+        Wait 4;
+        FastRun NAMEBis();
+        At<"%Player">;
+        setBlock<~,~-1,~,"air">;
+        setBlock<~,~-4,~,"air">;
+      NAME4_END
+    fun<NAME3>()-:
+      #NAME3#fun;
+       NULL;
+      #NAME3#text;
+        When<minecraft.used:minecraft.carrot_on_a_stick>(%Player&MyEvent): NAME4;
+    NAME3_END
+#!#text;
+   Loop NAME3();
+   FastLoop ProjLoop1();
+   Return;

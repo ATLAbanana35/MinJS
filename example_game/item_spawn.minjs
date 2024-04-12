@@ -1,0 +1,141 @@
+#!#imp;
+   @import Return;
+   @import At;
+   @import As;
+   @import Srand;
+   @import Loop;
+   @import Svar;
+   @import Run;
+   @import Srm;
+   @import Sset;
+   @import Wait;
+   @import SIf;
+   @Fimport Minecraft::Command;
+   @Fimport Minecraft::Summon;
+   @Fimport PrePossessor::S_PPvar;
+#!#fun;
+    fun<Vars>()-:
+    #Vars#fun;
+      NULL;
+    #Vars#text;
+      String PPvar Player = "@a[team=player1,limit=1]";
+      %Player Svar Counter = 33;
+      Counter.Set(33);
+    Vars_END
+    fun<Item_1>()-:
+      #Item_1#fun;
+        NULL;
+      #Item_1#text;
+        At<"@e[type=minecraft:armor_stand,tag=randomizer]">;
+        Execute<"summon minecraft:item ~ ~ ~ {Item:{id:"minecraft:gold_nugget",Count:5b}}">;
+    Item_1_END
+    fun<Item_2>()-:
+      #Item_2#fun;
+        NULL;
+      #Item_2#text;
+        At<"@e[type=minecraft:armor_stand,tag=randomizer]">;
+      Execute<"summon minecraft:item ~ ~ ~ {Item:{id:"minecraft:spyglass",Count:1b}}">;
+    Item_2_END
+    fun<Item_3>()-:
+      #Item_3#fun;
+        NULL;
+      #Item_3#text;
+      At<"@e[type=minecraft:armor_stand,tag=randomizer]">;
+      Execute<"summon minecraft:item ~ ~ ~ {Item:{id:"minecraft:iron_nugget",Count:10b}}">;
+    Item_3_END
+    fun<Item_4>()-:
+      #Item_4#fun;
+        NULL;
+      #Item_4#text;
+      At<"@e[type=minecraft:armor_stand,tag=randomizer]">;
+      Execute<"summon minecraft:item ~ ~ ~ {Item:{id:"minecraft:golden_apple",Count:2b}}">;
+    Item_4_END
+    fun<Item_5>()-:
+      #Item_5#fun;
+        NULL;
+      #Item_5#text;
+      At<"@e[type=minecraft:armor_stand,tag=randomizer]">;
+      Execute<"summon minecraft:item ~ ~ ~ {Item:{id:"minecraft:enchanted_golden_apple",Count:1b}}">;
+    Item_5_END
+    fun<Item_6>()-:
+      #Item_6#fun;
+        NULL;
+      #Item_6#text;
+      At<"@e[type=minecraft:armor_stand,tag=randomizer]">;
+      Execute<"summon minecraft:item ~ ~ ~ {Item:{id:"minecraft:bow",Count:1b}}">;
+    Item_6_END
+    fun<Item_7>()-:
+      #Item_7#fun;
+        NULL;
+      #Item_7#text;
+      At<"@e[type=minecraft:armor_stand,tag=randomizer]">;
+      Execute<"summon minecraft:item ~ ~ ~ {Item:{id:"minecraft:elytra",Count:1b}}">;
+      Item_7_END
+      fun<Item_8>()-:
+      #Item_8#fun;
+      NULL;
+      #Item_8#text;
+      At<"@e[type=minecraft:armor_stand,tag=randomizer]">;
+      Execute<"summon minecraft:item ~ ~ ~ {Item:{id:"minecraft:firework_rocket",Count:4b}}">;
+    Item_8_END
+    fun<Item_9>()-:
+      #Item_9#fun;
+        NULL;
+      #Item_9#text;
+      At<"@e[type=minecraft:armor_stand,tag=randomizer]">;
+      Execute<"summon minecraft:item ~ ~ ~ {Item:{id:"minecraft:carrot_on_a_stick",Count:1b}}">;
+    Item_9_END
+    fun<Item_10>()-:
+      #Item_10#fun;
+        NULL;
+      #Item_10#text;
+      At<"@e[type=minecraft:armor_stand,tag=randomizer]">;
+      Execute<"summon minecraft:item ~ ~ ~ {Item:{id:"minecraft:diamond_pickaxe",Count:1b}}">;
+    Item_10_END
+    fun<RunLPO>()-:
+      #RunLPO#fun;
+        NULL;
+      #RunLPO#text;
+        @r Svar randomize = 0;
+        As<"@a">;
+        Execute<"execute store result score @s randomize run random value 1..10">;
+        At<"@a">;
+        Summon<"armor_stand","~ 311 ~","{"Tags":["randomizer"]}">;
+        At<"@a">;
+        Execute<"spreadplayers ~ ~ 10 10 false @e[type=minecraft:armor_stand,tag=randomizer]">;
+        Wait 4;
+        Wait 4;
+        Wait 4;
+        If<Svar>(randomize = 1): Item_1;
+        If<Svar>(randomize = 2): Item_2;
+        If<Svar>(randomize = 3): Item_3;
+        If<Svar>(randomize = 4): Item_4;
+        If<Svar>(randomize = 5): Item_5;
+        If<Svar>(randomize = 6): Item_6;
+        If<Svar>(randomize = 7): Item_7;
+        If<Svar>(randomize = 8): Item_8;
+        If<Svar>(randomize = 9): Item_9;
+        If<Svar>(randomize = 10): Item_10;
+        Wait 4;
+        Wait 4;
+        Execute<"kill @e[type=minecraft:armor_stand,tag=randomizer]">;
+      RunLPO_END
+      fun<SpawnInit>()-:
+      #SpawnInit#fun;
+        NULL;
+      #SpawnInit#text;
+          Counter.Set(33);
+          Execute<"say Item Spawning!">;
+          Run RunLPO();
+        SpawnInit_END    
+      fun<MainLoop>()-:
+      #MainLoop#fun;
+        NULL;
+      #MainLoop#text;
+        Counter.Remove();
+        If<Svar>(Counter < 1): SpawnInit();
+      MainLoop_END
+#!#text;
+   Run Vars();
+   Loop MainLoop():
+   Return;
