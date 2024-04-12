@@ -1,19 +1,19 @@
 # MinJS
 
-Voulez-vous un language de programmation que vous pouvez compiler en commands blocks
-Voicis MinJS!
+Do you want a programming language that you can compile into command blocks
+Here is MinJS!
 
-/!\ Les fonctionalités sont limitées, si vous voulez en ajouter une, avertissez moi, je l'ajouterait volentiers
+/!\ The features are limited, if you want to add one, let me know, I will happily add it
 
-## Avantages:
+## Benefits:
 
-1. Simplifie
+1. Simplify
 
-## Désaventages:
+## Disadvantages:
 
-1. Lent
-2. Pas optimisé
-3. Mal codé
+1. Slow
+2. Not optimized
+3. Poorly coded
 
 ### Language Doc
 

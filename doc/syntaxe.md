@@ -1,6 +1,6 @@
 # 1: La syntaxe :
 
-Regardons ce code
+Let's look at this code
 
 ```minjs
 #!#imp;
@@ -19,30 +19,30 @@ Regardons ce code
    Return;
 ```
 
-Qu'est ce que nous avons ici ?
+What do we have here?
 
-### 1: les sections
+### 1: sections
 
-Toutes les fonctions ont des sections.
-Il y en a deux, et une à part:
+All functions have sections.
+There are two, and one apart:
 
-1. #[NAME]#fun, elle contient les fonctions.
-2. #[NAME]#text, elle contient le code a executer.
+1. #[NAME]#fun, it contains the functions.
+2. #[NAME]#text, it contains the code to execute.
 
-Vous avez sûrement remarqué le [NAME]. Dedan il faut indiquer le nom de la fonction (global étant appelée par défault `!`)
-À part, il y a `#!#imp`. Car est n'est que dans global
-(elle gere les imports)
+You probably noticed the [NAME]. Inside you must indicate the name of the function (global being called by default `!`)
+Separately, there is `#!#imp`. Because it is only in global
+(she manages imports)
 
-### 2: les imports
+### 2: imports
 
-Créez à partir de `#!#imp`, les imports permettent d'importer des fonction supplémentaires. Il y en existe deux types:
+Create from `#!#imp`, imports allow you to import additional functions. There are two types:
 
-1. `@import [IMPORT]` elle permet d'importer des modules globaux (Par ex: `Run`)
-2. `@Fimport [MODULE]::[IMPORT]` elle permet d'importer des modules qui viennent de modules spécifiques (Minecraft ou PreProssessor) (Par ex: `Minecraft::Print`)
+1. `@import [IMPORT]` allows you to import global modules (eg: `Run`)
+2. `@Fimport [MODULE]::[IMPORT]` it allows you to import modules that come from specific modules (Minecraft or PreProssessor) (For example: `Minecraft::Print`)
 
-### 2: les fonctions
+### 2: functions
 
-Les fonction ont comme base ceci :
+The functions are based on this:
 
 ```minjs
 fun<[NOM]>()-:
@@ -53,16 +53,16 @@ fun<[NOM]>()-:
 [NOM]_END
 ```
 
-Remplacer juste `[NOM]` par le nom de votre fonction, et les instructions, et ce sera bon!
+Just replace `[NAME]` with the name of your function, and the instructions, and you'll be good to go!
 
-NE METTEZ PAS DE FONCTION DANS LES FONCTIONS; Erreurs l'optimisations (les fonctions dans global sont par défault global (accéssibles dans d'autes fonctions))
+DO NOT PUT FUNCTIONS IN FUNCTIONS; Optimization errors (functions in global are by default global (accessible in other functions))
 
-Si il n'y à pas de fonctions dans global, mettez `NULL;`
+If there are no functions in global, set `NULL;`
 
-### 2: le code
+### 2: the code
 
-(Refférez vous aux modules)
+(Refer to modules)
 
-(toutes les instructions sont séparées par des `;`)
+(all instructions are separated by `;`)
 
-# NEXT PART: modules.md
+#NEXT PART: modules.md
