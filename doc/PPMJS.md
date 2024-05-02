@@ -12,6 +12,6 @@ String PPvar [NAME] = "NAME"
 
 NAME=String; name of the variable
 
-C'est une variable qui est déclarée avant la compilation, remplacez juste un argument par `%[NAME]`, et il vas être remplacé par le string
+It's a variable that is declared before compilation, just replace one argument with %[NAME], and it will be replaced by the string
 
 # NEXT PART: notes.md
