@@ -1,4 +1,4 @@
-# 1: La syntaxe :
+# 1: The syntax :
 
 Let's look at this code
 
